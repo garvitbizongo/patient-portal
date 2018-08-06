@@ -19,7 +19,7 @@ class Api::ApiController < ActionController::Base
       return
     end
 
-    render json: { error: "Invalid Password" }, status: :unauthorized unless patient.valid_password?(password)
+    render json: { error: "Invalid Password" }, status: :unauthorized unless patient.test_password?(password)
 
     @logging_in_patient = patient
   end
@@ -31,11 +31,8 @@ class Api::ApiController < ActionController::Base
       @patient = Patient.find_by_auth_token(token)
 
       if @patient && @patient.active?
-        # Notice we are passing store false, so the user is not
-        # actually stored in the session and a token is needed
-        # for every request. If you want the token to work as a
-        # sign in token, you can simply remove store: false.
-        sign_in @patient, store: false
+        session.clear
+        session[:patient_id] = @patient.id
       else
         false
       end

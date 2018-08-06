@@ -19,4 +19,8 @@ class Patient < ActiveRecord::Base
       break token unless Patient.where(auth_token: token).first
     end
   end
+
+  def test_password?(password)
+    self.password == password
+  end
 end
