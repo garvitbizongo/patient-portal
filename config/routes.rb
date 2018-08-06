@@ -53,4 +53,9 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+
+  namespace :api, defaults: { format: :json } do
+    post 'auth' => 'api#auth'
+
+  end
 end

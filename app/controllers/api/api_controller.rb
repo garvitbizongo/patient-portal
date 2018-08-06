@@ -24,6 +24,25 @@ class Api::ApiController < ActionController::Base
     @logging_in_patient = patient
   end
 
+  protected
+
+  def authenticate_patient!
+    authenticate_or_request_with_http_token do |token, options|
+      @patient = Patient.find_by_auth_token(token)
+
+      if @patient && @patient.active?
+        # Notice we are passing store false, so the user is not
+        # actually stored in the session and a token is needed
+        # for every request. If you want the token to work as a
+        # sign in token, you can simply remove store: false.
+        sign_in @patient, store: false
+      else
+        false
+      end
+    end
+    logger.info admin_backend_text_log({company: "Bizongo", action: (controller_name.camelize + action_name.camelize) + "Admin" }) if @admin_user.present?
+  end
+
   private
 
   def valid_secret_token?
