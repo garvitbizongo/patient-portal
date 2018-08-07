@@ -60,5 +60,9 @@ Rails.application.routes.draw do
     resources :prescriptions, only: [:show]
     resources :prescription_requests, path: 'prescription-requests', only: [:index, :update]
 
+    namespace :doctor_pharmacist, path: "doctor-pharmacist", defaults: { format: :json } do
+      post 'auth' => 'api#auth'
+    end
+
   end
 end
