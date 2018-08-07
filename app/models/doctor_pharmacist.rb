@@ -1,4 +1,6 @@
 class DoctorPharmacist < ActiveRecord::Base
+  has_many :prescription_request
+
   enum status: [:inactive, :active]
   enum role: [:doctor, :pharmacist]
 
