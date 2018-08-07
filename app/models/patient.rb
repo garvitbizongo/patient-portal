@@ -1,4 +1,6 @@
 class Patient < ActiveRecord::Base
+  has_many :prescriptions
+
   enum status: [:inactive, :active]
 
   validates :email, presence: true, uniqueness: true
