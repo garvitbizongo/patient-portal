@@ -35,7 +35,7 @@ class Api::DoctorPharmacist::ApiController < ActionController::Base
 
   def authenticate_doctor_pharmacist!
     authenticate_or_request_with_http_token do |token, options|
-      @doctor_pharmacist = DoctorPharmacist.find_by_auth_token(token)
+      @doctor_pharmacist = ::DoctorPharmacist.find_by_auth_token(token)
 
       if @doctor_pharmacist && @doctor_pharmacist.active?
         session[:doc_pharma_id] = nil

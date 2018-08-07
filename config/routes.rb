@@ -62,6 +62,8 @@ Rails.application.routes.draw do
 
     namespace :doctor_pharmacist, path: "doctor-pharmacist", defaults: { format: :json } do
       post 'auth' => 'api#auth'
+
+      resources :prescriptions, only: [:show]
     end
 
   end
