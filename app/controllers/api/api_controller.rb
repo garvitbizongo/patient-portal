@@ -39,7 +39,7 @@ class Api::ApiController < ActionController::Base
       @patient = Patient.find_by_auth_token(token)
 
       if @patient && @patient.active?
-        session.clear
+        session[:patient_id] = nil
         session[:patient_id] = @patient.id
       else
         false
