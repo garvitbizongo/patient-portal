@@ -24,6 +24,14 @@ class Api::ApiController < ActionController::Base
     @logging_in_patient = patient
   end
 
+  def current_patient
+    if session[:patient_id]
+      Patient.find_by_id(session[:patient_id])
+    else
+      nil
+    end
+  end
+
   protected
 
   def authenticate_patient!
