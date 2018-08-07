@@ -20,11 +20,20 @@ class Api::DoctorPharmacist::PrescriptionsController < Api::DoctorPharmacist::Ap
       @errors << "The request you made for this prescription is pending. You can not view this prescription yet."
     elsif prescription_request.blank?
       create_prescription_request
-      @errors << "A request has been sent to patient. You can view this prescription when patient will approve the request."
     end
   end
 
   def create_prescription_request
-    
+    service_params = {
+      prescription_id: @prescription.id,
+      doctor_pharmacist_id: current_doc_pharma.id
+    }
+    context = ::PrescriptionRequestServices::CreatePrescriptionRequest.new(service_params).execute
+
+    if context.errors.present?
+      @errors << context.errors
+    else
+      @errors << "A request has been sent to patient. You can view this prescription when patient will approve the request."
+    end
   end
 end

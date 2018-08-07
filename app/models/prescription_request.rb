@@ -21,5 +21,6 @@ class PrescriptionRequest < ActiveRecord::Base
     query = query.by_prescription_id(options[:prescription_id]) if options[:prescription_id].present?
     query = query.by_doctor_pharmacist_id(options[:doctor_pharmacist_id]) if options[:doctor_pharmacist_id].present?
     query = query.by_patient_id(options[:patient_id]) if options[:patient_id].present?
+    query
   }
 end
