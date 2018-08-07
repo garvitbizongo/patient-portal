@@ -57,5 +57,7 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     post 'auth' => 'api#auth'
 
+    resources :prescriptions, only: [:show]
+
   end
 end
