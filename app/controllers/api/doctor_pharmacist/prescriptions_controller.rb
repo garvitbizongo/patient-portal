@@ -3,7 +3,28 @@ class Api::DoctorPharmacist::PrescriptionsController < Api::DoctorPharmacist::Ap
 
   def show
     @prescription = Prescription.find_by_id(params[:id])
-
     render json: { errors: "Prescription not found for the given id" }, status: :bad_request if @prescription.blank?
+
+    @errors = []
+    check_for_viewing_prescription
+
+    render json: { errors: @errors.join(",") }, status: :bad_request if @errors.present?
+  end
+
+  private
+
+  def check_for_viewing_prescription
+    prescription_request = PrescriptionRequest.filter({prescription_id: @prescription.id, doctor_pharmacist_id: current_doc_pharma.id}).first
+
+    if prescription_request.present? && prescription_request.unapproved?
+      @errors << "The request you made for this prescription is pending. You can not view this prescription yet."
+    elsif prescription_request.blank?
+      create_prescription_request
+      @errors << "A request has been sent to patient. You can view this prescription when patient will approve the request."
+    end
+  end
+
+  def create_prescription_request
+    
   end
 end
