@@ -37,7 +37,6 @@ class Api::ApiController < ActionController::Base
         false
       end
     end
-    logger.info admin_backend_text_log({company: "Bizongo", action: (controller_name.camelize + action_name.camelize) + "Admin" }) if @admin_user.present?
   end
 
   private

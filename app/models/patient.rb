@@ -25,4 +25,8 @@ class Patient < ActiveRecord::Base
   def test_password?(password)
     self.password == password
   end
+
+  def name
+    "#{self.first_name} #{self.last_name}"
+  end
 end
