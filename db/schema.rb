@@ -11,10 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180807020856) do
+ActiveRecord::Schema.define(version: 20180807022235) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "doctor_pharmacists", force: :cascade do |t|
+    t.string   "email",            default: "", null: false
+    t.string   "password",         default: "", null: false
+    t.string   "first_name"
+    t.string   "last_name"
+    t.integer  "status",           default: 0
+    t.string   "contact_number"
+    t.string   "auth_token"
+    t.string   "speciality"
+    t.string   "hospital_address"
+    t.string   "store_address"
+    t.integer  "role"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
 
   create_table "patients", force: :cascade do |t|
     t.string   "email",          default: "", null: false
