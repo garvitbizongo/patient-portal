@@ -58,6 +58,7 @@ Rails.application.routes.draw do
     post 'auth' => 'api#auth'
 
     resources :prescriptions, only: [:show]
+    resources :prescription_requests, only: [:index, :update]
 
   end
 end
